@@ -1,6 +1,7 @@
 package com.lc.apilc.models.services;
 
 import com.lc.apilc.models.entity.User;
+import com.lc.apilc.models.request.UserRequest;
 import com.lc.apilc.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ public class UserService {
     UserRepository userRepository;
 
     @Transactional
-    public User createUser(User user){
+    public User createUser(UserRequest userRequest){
+        User user = new User(userRequest);
         return this.userRepository.save(user);
     }
 

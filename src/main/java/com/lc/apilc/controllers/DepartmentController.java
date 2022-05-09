@@ -17,10 +17,10 @@ import java.util.List;
 public class DepartmentController {
 
     @Autowired
-    DepartmentService departmentService;
+    private DepartmentService departmentService;
 
     @GetMapping()
-    public ResponseEntity<List<Department>> getDepartments() {
+    public List<Department> getDepartments() {
 
 //        List<Department> departments = departmentService.getDepartments();
 //        List<DepartmentResponse> departmentResponse = new ArrayList<DepartmentResponse>();
@@ -39,11 +39,12 @@ public class DepartmentController {
 //
 //        return ResponseEntity.status(HttpStatus.OK).body(departmentResponse);
 
-        return ResponseEntity.status(HttpStatus.OK).body(departmentService.getDepartments());
+        return departmentService.getDepartments();
     }
 
     @PostMapping
-    public ResponseEntity<Object> createDepartment(@RequestBody @Valid DepartmentRequest departmentRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.createDepartment(new Department(departmentRequest.getName())));
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object createDepartment(@RequestBody @Valid DepartmentRequest departmentRequest) {
+        return departmentService.createDepartment(departmentRequest);
     }
 }

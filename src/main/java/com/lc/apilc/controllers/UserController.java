@@ -21,13 +21,13 @@ import java.util.UUID;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    DepartmentService departmentService;
+    private DepartmentService departmentService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getUser(@PathVariable UUID id) {
+    public Object getUser(@PathVariable UUID id) {
         Optional<User> userOp = userService.findById(id);
         if (userOp.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado!");
@@ -37,25 +37,17 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> getUsers() {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getUsers());
+    public List<User> getUsers() {
+        return userService.getUsers();
     }
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@RequestBody @Valid UserRequest userRequest) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object createUser(@RequestBody @Valid UserRequest userRequest) {
         if (userService.existsByLogin(userRequest.getLogin())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Login já existe!");
         }
-
-        Optional<Department> optionalDepartment = departmentService.findById(userRequest.getDepartmentId());
-        if (optionalDepartment.isPresent()) {
-            Department department = optionalDepartment.get();
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(
-                    new User(userRequest.getName(), userRequest.getLogin(), userRequest.getPassword(), department, userRequest.isAdmin()))
-            );
-        }
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Departamento inválido!");
+        return userService.createUser(userRequest);
     }
 
 }

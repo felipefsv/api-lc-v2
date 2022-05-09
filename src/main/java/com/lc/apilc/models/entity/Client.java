@@ -1,5 +1,6 @@
 package com.lc.apilc.models.entity;
 
+import com.lc.apilc.models.request.ClientRequest;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,12 +18,12 @@ public class Client implements Serializable  {
 
     }
 
-    public Client(String name, String document, String phone, String email, String address) {
-        this.name = name;
-        this.document = document;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
+    public Client(ClientRequest clientRequest) {
+        this.name = clientRequest.getName();
+        this.document = clientRequest.getDocument();
+        this.phone = clientRequest.getPhone();
+        this.email = clientRequest.getEmail();
+        this.address = clientRequest.getAddress();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }

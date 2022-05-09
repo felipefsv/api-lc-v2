@@ -2,6 +2,7 @@ package com.lc.apilc.models.services;
 
 import com.lc.apilc.models.entity.Department;
 import com.lc.apilc.models.entity.User;
+import com.lc.apilc.models.request.DepartmentRequest;
 import com.lc.apilc.repositories.DepartmentRepository;
 import com.lc.apilc.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,8 @@ public class DepartmentService {
     UserRepository userRepository;
 
     @Transactional
-    public Department createDepartment(Department department) {
+    public Department createDepartment(DepartmentRequest departmentRequest) {
+        Department department = new Department(departmentRequest);
         return this.departmentRepository.save(department);
     }
 

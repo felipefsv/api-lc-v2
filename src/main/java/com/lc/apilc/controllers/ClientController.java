@@ -17,23 +17,17 @@ import java.util.List;
 public class ClientController {
 
     @Autowired
-    ClientService clientService;
+    private ClientService clientService;
 
     @GetMapping()
-    public ResponseEntity<List<Client>> getClients() {
-        return ResponseEntity.status(HttpStatus.OK).body(clientService.getCLients());
+    public List<Client> getClients() {
+        return clientService.getCLients();
     }
 
     @PostMapping
-    public ResponseEntity<Object> createClient(@RequestBody @Valid ClientRequest clientRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.createClient(
-                new Client(
-                        clientRequest.getName(),
-                        clientRequest.getDocument(),
-                        clientRequest.getPhone(),
-                        clientRequest.getEmail(),
-                        clientRequest.getAddress()
-                )));
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object createClient(@RequestBody @Valid ClientRequest clientRequest) {
+        return clientService.createClient(clientRequest);
     }
 
 }

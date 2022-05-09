@@ -1,5 +1,6 @@
 package com.lc.apilc.models.entity;
 
+import com.lc.apilc.models.request.SupplierRequest;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,12 +18,12 @@ public class Supplier implements Serializable  {
 
     }
 
-    public Supplier(String name, String document, String phone, String email, String address) {
-        this.name = name;
-        this.document = document;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
+    public Supplier(SupplierRequest supplierRequest) {
+        this.name = supplierRequest.getName();
+        this.document = supplierRequest.getDocument();
+        this.phone = supplierRequest.getPhone();
+        this.email = supplierRequest.getEmail();
+        this.address = supplierRequest.getAddress();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }

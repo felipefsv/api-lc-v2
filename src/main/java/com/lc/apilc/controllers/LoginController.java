@@ -17,13 +17,13 @@ import javax.validation.Valid;
 public class LoginController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
     @Qualifier("appName")
     private String applicationName;
 
     @PostMapping
-    public ResponseEntity<Object> login(@RequestBody @Valid LoginRequest loginRequest) {
+    public Object login(@RequestBody @Valid LoginRequest loginRequest) {
         User user = userService.findByLogin(loginRequest.getLogin());
         if(user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login inválido!" + this.applicationName);

@@ -17,21 +17,17 @@ import java.util.List;
 public class WorkOrderController {
 
     @Autowired
-    WorkOrderService workOrderService;
+    private WorkOrderService workOrderService;
 
     @GetMapping()
-    public ResponseEntity<List<WorkOrder>> getWorkOrders() {
-        return ResponseEntity.status(HttpStatus.OK).body(workOrderService.getWorkOrders());
+    public List<WorkOrder> getWorkOrders() {
+        return workOrderService.getWorkOrders();
     }
 
     @PostMapping
-    public ResponseEntity<Object> createWorkOrder(@RequestBody @Valid WorkOrderRequest workOrderRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(workOrderService.createWorkOrder(
-                new WorkOrder(
-                        workOrderRequest.getStatus(),
-                        workOrderRequest.getClient(),
-                        workOrderRequest.getUser()
-                )));
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object createWorkOrder(@RequestBody @Valid WorkOrderRequest workOrderRequest) {
+        return workOrderService.createWorkOrder(workOrderRequest);
     }
 
 }

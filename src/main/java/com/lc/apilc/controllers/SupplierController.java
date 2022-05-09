@@ -17,22 +17,16 @@ import java.util.List;
 public class SupplierController {
 
     @Autowired
-    SupplierService supplierService;
+    private SupplierService supplierService;
 
     @GetMapping()
-    public ResponseEntity<List<Supplier>> getSuppliers() {
-        return ResponseEntity.status(HttpStatus.OK).body(supplierService.getSuppliers());
+    public List<Supplier> getSuppliers() {
+        return supplierService.getSuppliers();
     }
 
     @PostMapping
-    public ResponseEntity<Object> createSupplier(@RequestBody @Valid SupplierRequest supplierRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(supplierService.createSupplier(
-                new Supplier(
-                        supplierRequest.getName(),
-                        supplierRequest.getDocument(),
-                        supplierRequest.getPhone(),
-                        supplierRequest.getEmail(),
-                        supplierRequest.getAddress()
-                )));
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object createSupplier(@RequestBody @Valid SupplierRequest supplierRequest) {
+        return supplierService.createSupplier(supplierRequest);
     }
 }

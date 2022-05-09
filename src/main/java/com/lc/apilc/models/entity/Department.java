@@ -1,5 +1,6 @@
 package com.lc.apilc.models.entity;
 
+import com.lc.apilc.models.request.DepartmentRequest;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,8 +20,8 @@ public class Department implements Serializable {
 
     }
 
-    public Department(String name) {
-        this.name = name;
+    public Department(DepartmentRequest departmentRequest) {
+        this.name = departmentRequest.getName();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }

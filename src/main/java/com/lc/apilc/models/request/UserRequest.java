@@ -1,5 +1,6 @@
 package com.lc.apilc.models.request;
 
+import com.lc.apilc.models.entity.Department;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -17,5 +18,5 @@ public class UserRequest {
     @NotNull
     private boolean isAdmin;
     @NotNull
-    private UUID departmentId;
+    private Department department;
 }

@@ -1,6 +1,7 @@
 package com.lc.apilc.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.lc.apilc.models.request.UserRequest;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,15 +18,15 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, String login, String password, Department department, boolean isAdmin) {
-        this.name = name;
-        this.login = login;
-        this.password = password;
-        this.department = department;
+    public User(UserRequest userRequest) {
+        this.name = userRequest.getName();
+        this.login = userRequest.getLogin();
+        this.password = userRequest.getPassword();
+        this.department = userRequest.getDepartment();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.isActive = true;
-        this.isAdmin = isAdmin;
+        this.isAdmin = userRequest.isAdmin();
     }
 
     @Id

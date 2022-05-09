@@ -1,5 +1,6 @@
 package com.lc.apilc.models.entity;
 
+import com.lc.apilc.models.request.WorkOrderRequest;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,10 +18,10 @@ public class WorkOrder implements Serializable {
 
     }
 
-    public WorkOrder(String status, Client client, User user) {
-        this.status = status;
-        this.client = client;
-        this.user = user;
+    public WorkOrder(WorkOrderRequest workOrderRequest) {
+        this.status = workOrderRequest.getStatus();
+        this.client = workOrderRequest.getClient();
+        this.user = workOrderRequest.getUser();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
