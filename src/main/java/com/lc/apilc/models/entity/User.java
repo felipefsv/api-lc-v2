@@ -1,5 +1,6 @@
 package com.lc.apilc.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lc.apilc.models.request.UserRequest;
 import lombok.Data;
@@ -49,7 +50,6 @@ public class User implements Serializable {
     private LocalDateTime updatedAt;
 
     @ManyToOne(targetEntity = Department.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="department_id", nullable=false)
     private Department department;
 
 }

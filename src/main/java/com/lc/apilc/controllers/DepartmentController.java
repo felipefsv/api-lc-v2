@@ -1,7 +1,7 @@
 package com.lc.apilc.controllers;
 
-import com.lc.apilc.models.request.DepartmentRequest;
 import com.lc.apilc.models.entity.Department;
+import com.lc.apilc.models.request.DepartmentRequest;
 import com.lc.apilc.models.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -46,5 +47,11 @@ public class DepartmentController {
     @ResponseStatus(HttpStatus.CREATED)
     public Object createDepartment(@RequestBody @Valid DepartmentRequest departmentRequest) {
         return departmentService.createDepartment(departmentRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public Object deleteDepartment(@PathVariable UUID id) {
+        departmentService.deleteDepartment(id);
+        return ResponseEntity.noContent().build();
     }
 }

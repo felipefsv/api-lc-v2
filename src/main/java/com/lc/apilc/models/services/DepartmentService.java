@@ -41,4 +41,7 @@ public class DepartmentService {
         return this.userRepository.findByDepartmentId(id);
     }
 
+    public void deleteDepartment(UUID id) {
+        this.departmentRepository.deleteById(id);
+    }
 }

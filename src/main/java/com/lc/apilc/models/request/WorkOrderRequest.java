@@ -5,15 +5,16 @@ import com.lc.apilc.models.entity.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class WorkOrderRequest {
     @NotBlank
     private String status;
 
-    @NotBlank
+    @NotNull
     private Client client;
 
-    @NotBlank
+    @NotNull
     private User user;
 }

@@ -47,4 +47,12 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
+    public void deleteUser(UUID id){
+        this.userRepository.deleteById(id);
+    }
+
+    public User updateUser(User user){
+        return this.userRepository.save(user);
+    }
+
 }

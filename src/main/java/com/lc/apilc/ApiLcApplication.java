@@ -16,9 +16,9 @@ import java.util.List;
 public class ApiLcApplication {
 
 	@Autowired
-	DepartmentService departmentService;
+	private DepartmentService departmentService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
 	@Qualifier("appName")

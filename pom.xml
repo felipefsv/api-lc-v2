@@ -13,8 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api-lc</name>
 	<description>API para Sistema OS LC</description>
-	<properties>
-		<java.version>11</java.version>
+	<properties>		
 	</properties>
 	<dependencies>
 

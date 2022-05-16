@@ -1,11 +1,11 @@
 package com.lc.apilc.models.request;
 
 import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
 
 @Data
 public class ClientRequest {
+
     @NotBlank
     private String name;
 
@@ -16,8 +16,8 @@ public class ClientRequest {
     private String phone;
 
     @NotBlank
-    private String email;
+    private String document;
 
     @NotBlank
-    private String document;
+    private String email;
 }
