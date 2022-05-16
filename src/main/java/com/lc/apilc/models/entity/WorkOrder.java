@@ -1,5 +1,6 @@
 package com.lc.apilc.models.entity;
 
+import com.lc.apilc.enums.StatusWorkOrder;
 import com.lc.apilc.models.request.WorkOrderRequest;
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class WorkOrder implements Serializable {
     }
 
     public WorkOrder(WorkOrderRequest workOrderRequest) {
-        this.status = workOrderRequest.getStatus();
+        this.status = StatusWorkOrder.valueOf(StatusWorkOrder.EM_AUTORIZACAO.toString());
         this.client = workOrderRequest.getClient();
         this.user = workOrderRequest.getUser();
         this.createdAt = LocalDateTime.now();
@@ -30,8 +31,9 @@ public class WorkOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, unique = false, length = 255)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatusWorkOrder status;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

@@ -1,4 +1,4 @@
-package com.lc.apilc.models.services;
+package com.lc.apilc.services;
 
 import com.lc.apilc.models.entity.Department;
 import com.lc.apilc.models.entity.User;
@@ -41,6 +41,7 @@ public class DepartmentService {
         return this.userRepository.findByDepartmentId(id);
     }
 
+    @Transactional
     public void deleteDepartment(UUID id) {
         this.departmentRepository.deleteById(id);
     }

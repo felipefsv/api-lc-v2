@@ -1,4 +1,4 @@
-package com.lc.apilc.models.services;
+package com.lc.apilc.services;
 
 import com.lc.apilc.models.entity.User;
 import com.lc.apilc.models.request.UserRequest;
@@ -47,10 +47,12 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
+    @Transactional
     public void deleteUser(UUID id){
         this.userRepository.deleteById(id);
     }
 
+    @Transactional
     public User updateUser(User user){
         return this.userRepository.save(user);
     }

@@ -2,7 +2,7 @@ package com.lc.apilc.controllers;
 
 import com.lc.apilc.models.entity.Department;
 import com.lc.apilc.models.request.DepartmentRequest;
-import com.lc.apilc.models.services.DepartmentService;
+import com.lc.apilc.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

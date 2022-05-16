@@ -2,7 +2,7 @@ package com.lc.apilc.controllers;
 
 import com.lc.apilc.models.entity.Supplier;
 import com.lc.apilc.models.request.SupplierRequest;
-import com.lc.apilc.models.services.SupplierService;
+import com.lc.apilc.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

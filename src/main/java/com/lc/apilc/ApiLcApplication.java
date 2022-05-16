@@ -2,8 +2,8 @@ package com.lc.apilc;
 
 import com.lc.apilc.models.entity.Department;
 import com.lc.apilc.models.entity.User;
-import com.lc.apilc.models.services.DepartmentService;
-import com.lc.apilc.models.services.UserService;
+import com.lc.apilc.services.DepartmentService;
+import com.lc.apilc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
