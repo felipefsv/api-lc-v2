@@ -9,14 +9,18 @@ import java.util.UUID;
 
 @Data
 public class UserRequest {
-    @NotBlank
+    @NotBlank(message = "Nome não pode ser vazio!")
     private String name;
-    @NotBlank
+
+    @NotBlank(message = "Login não pode ser vazio!")
     private String login;
-    @NotBlank
+
+    @NotBlank(message = "Senha não pode ser vazio!")
     private String password;
-    @NotNull
+
+    @NotNull(message = "Flag isAdmin não pode ser null!")
     private boolean isAdmin;
-    @NotNull
+
+    @NotNull(message = "Departamento não pode ser null!")
     private Department department;
 }

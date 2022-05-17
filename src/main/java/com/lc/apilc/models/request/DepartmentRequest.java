@@ -6,6 +6,6 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class DepartmentRequest {
-    @NotBlank
+    @NotBlank(message = "Nome não pode ser vazio!")
     private String name;
 }

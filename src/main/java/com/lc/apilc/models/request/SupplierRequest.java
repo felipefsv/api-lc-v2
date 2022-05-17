@@ -5,19 +5,18 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class SupplierRequest {
-
-    @NotBlank
+    @NotBlank(message = "Nome não pode ser vazio!")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Endereço não pode ser vazio!")
     private String address;
 
-    @NotBlank
+    @NotBlank(message = "Telefone não pode ser vazio!")
     private String phone;
 
-    @NotBlank
+    @NotBlank(message = "Documento não pode ser vazio!")
     private String document;
 
-    @NotBlank
+    @NotBlank(message = "Email não pode ser vazio!")
     private String email;
 }
