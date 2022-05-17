@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -34,7 +36,8 @@ public class UploadController {
         FileOutputStream os = new FileOutputStream(modifiedFile);
         os.write(file.getBytes());
 
-        String fileName = file.getOriginalFilename() + "_" + System.currentTimeMillis();
+        String fileName = getFormattedFileName(file);
+        System.out.println(fileName);
         s3.putObject(bucketName, fileName, modifiedFile);
         modifiedFile.delete();
         return UploadResponse.builder().message("Arquivo enviado com sucesso!").fileName(fileName).build();
@@ -59,6 +62,19 @@ public class UploadController {
     public UploadResponse deleteFile(@RequestParam(name = "file") String fileName) {
         s3.deleteObject(bucketName, fileName);
         return UploadResponse.builder().message("Arquivo deletado com sucesso!").fileName(fileName).build();
+    }
+
+    private String getFormattedFileName(MultipartFile filename) {
+        long timeStamp = System.currentTimeMillis();
+        String fileName = filename.getOriginalFilename();
+        Optional<String> fileExt = getFileExtension(fileName);
+        return UUID.randomUUID() + "_" + timeStamp + fileExt.get();
+    }
+
+    private Optional<String> getFileExtension(String filename) {
+        return Optional.ofNullable(filename)
+                .filter(f -> f.contains("."))
+                .map(f -> "." + f.substring(filename.lastIndexOf(".") + 1));
     }
 
 }
