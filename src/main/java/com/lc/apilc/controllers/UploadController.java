@@ -1,9 +1,13 @@
 package com.lc.apilc.controllers;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
+import com.lc.apilc.enums.ErrorCodes;
+import com.lc.apilc.exception.LcException;
 import com.lc.apilc.models.response.UploadResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,14 +35,26 @@ public class UploadController {
     private String bucketName;
 
     @PostMapping
-    public UploadResponse uploadFile(@RequestParam(name = "file") MultipartFile file) throws IOException {
+    public UploadResponse uploadFile(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "acl") String acl) throws IOException {
         File modifiedFile = new File(file.getOriginalFilename());
         FileOutputStream os = new FileOutputStream(modifiedFile);
         os.write(file.getBytes());
 
         String fileName = getFormattedFileName(file);
-        System.out.println(fileName);
-        s3.putObject(bucketName, fileName, modifiedFile);
+
+        CannedAccessControlList cannedAccessControlList;
+
+        if(acl.equals("public")){
+            cannedAccessControlList = CannedAccessControlList.PublicRead;
+        } else if(acl.equals("private")){
+            cannedAccessControlList = CannedAccessControlList.Private;
+        } else {
+            throw  new LcException("ACL Inválido!", ErrorCodes.ACL_INVALIDO);
+        }
+
+        s3.putObject(new PutObjectRequest(bucketName, fileName, modifiedFile)
+                .withCannedAcl(cannedAccessControlList));
+
         modifiedFile.delete();
         return UploadResponse.builder().message("Arquivo enviado com sucesso!").fileName(fileName).build();
     }
