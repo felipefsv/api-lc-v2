@@ -7,9 +7,9 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class WorkOrderRequest {
-    @NotNull(message = "Cliente não pode ser null!")
+    @NotNull(message = "{campo.os.cliente.obrigatorio}")
     private Client client;
 
-    @NotNull(message = "Usuário não pode ser null!")
+    @NotNull(message = "{campo.os.usuario.obrigatorio}")
     private User user;
 }

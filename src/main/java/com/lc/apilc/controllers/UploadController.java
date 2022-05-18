@@ -6,11 +6,12 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
+import com.lc.apilc.configuration.AWSConfig;
+import com.lc.apilc.configuration.InternationalizationConfig;
 import com.lc.apilc.enums.ErrorCodes;
 import com.lc.apilc.exception.LcException;
 import com.lc.apilc.models.response.UploadResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,11 +29,10 @@ import java.util.UUID;
 public class UploadController {
 
     @Autowired
-    private AmazonS3 s3;
+    private AWSConfig awsConfig;
 
     @Autowired
-    @Qualifier("awsBucket")
-    private String bucketName;
+    private InternationalizationConfig internationalizationConfig;
 
     @PostMapping
     public UploadResponse uploadFile(@RequestParam(name = "file") MultipartFile file, @RequestParam(name = "acl") String acl) throws IOException {
@@ -44,15 +44,15 @@ public class UploadController {
 
         CannedAccessControlList cannedAccessControlList;
 
-        if(acl.equals("public")){
+        if (acl.equals("public")) {
             cannedAccessControlList = CannedAccessControlList.PublicRead;
-        } else if(acl.equals("private")){
+        } else if (acl.equals("private")) {
             cannedAccessControlList = CannedAccessControlList.Private;
         } else {
             throw  new LcException("ACL Inválido!", ErrorCodes.ACL_INVALIDO);
         }
 
-        s3.putObject(new PutObjectRequest(bucketName, fileName, modifiedFile)
+        awsConfig.getClient().putObject(new PutObjectRequest(awsConfig.getAwsBucket(), fileName, modifiedFile)
                 .withCannedAcl(cannedAccessControlList));
 
         modifiedFile.delete();
@@ -61,7 +61,7 @@ public class UploadController {
 
     @GetMapping
     public ResponseEntity<ByteArrayResource> dowloadFile(@RequestParam(name = "file") String fileName) throws IOException {
-        S3Object s3Object = s3.getObject(bucketName, fileName);
+        S3Object s3Object = awsConfig.getClient().getObject(awsConfig.getAwsBucket(), fileName);
         S3ObjectInputStream objectContent = s3Object.getObjectContent();
         byte[] byteArray = IOUtils.toByteArray(objectContent);
 
@@ -76,7 +76,7 @@ public class UploadController {
 
     @DeleteMapping
     public UploadResponse deleteFile(@RequestParam(name = "file") String fileName) {
-        s3.deleteObject(bucketName, fileName);
+        awsConfig.getClient().deleteObject(awsConfig.getAwsBucket(), fileName);
         return UploadResponse.builder().message("Arquivo deletado com sucesso!").fileName(fileName).build();
     }
 

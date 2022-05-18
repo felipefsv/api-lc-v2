@@ -6,8 +6,8 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class LoginRequest {
-    @NotBlank(message = "Login não pode ser vazio!")
+    @NotBlank(message = "{campo.login.login.obrigatorio}")
     private String login;
-    @NotBlank(message = "Senha não pode ser vazio!")
+    @NotBlank(message = "{campo.login.senha.obrigatorio}")
     private String password;
 }

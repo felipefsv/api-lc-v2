@@ -6,18 +6,18 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class ClientRequest {
-    @NotBlank(message = "Nome não pode ser vazio!")
+    @NotBlank(message = "{campo.cliente.nome.obrigatorio}")
     private String name;
 
-    @NotBlank(message = "Endereço não pode ser vazio!")
+    @NotBlank(message = "{campo.cliente.endereco.obrigatorio}")
     private String address;
 
-    @NotBlank(message = "Telefone não pode ser vazio!")
+    @NotBlank(message = "{campo.cliente.telefone.obrigatorio}")
     private String phone;
 
-    @NotBlank(message = "Documento não pode ser vazio!")
+    @NotBlank(message = "{campo.cliente.documento.obrigatorio}")
     private String document;
 
-    @NotBlank(message = "Email não pode ser vazio!")
+    @NotBlank(message = "{campo.cliente.email.obrigatorio}")
     private String email;
 }

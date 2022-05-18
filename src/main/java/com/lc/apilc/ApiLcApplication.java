@@ -20,12 +20,9 @@ public class ApiLcApplication {
 
     @Autowired
     private DepartmentService departmentService;
-    @Autowired
-    private UserService userService;
 
     @Autowired
-    @Qualifier("appName")
-    private String applicationName;
+    private UserService userService;
 
     public static void main(String[] args) {
         SpringApplication.run(ApiLcApplication.class, args);
@@ -34,15 +31,7 @@ public class ApiLcApplication {
     @Bean
     public CommandLineRunner run() {
         return args -> {
-            List<Department> departments = this.departmentService.getDepartments();
-            System.out.println("######### DEPARTAMENTOS ############");
-            departments.forEach(department -> System.out.println(department.toString()));
-            System.out.println("####################################");
-            List<User> users = this.userService.getUsers();
-            System.out.println("######### USUÁRIOS ############");
-            users.forEach(user -> System.out.println(user.toString()));
-            System.out.println("###############################");
-            System.out.println("RUNNING: " + this.applicationName);
+            System.out.println("######### RUNNING ############");
         };
     }
 

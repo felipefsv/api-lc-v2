@@ -9,18 +9,18 @@ import java.util.UUID;
 
 @Data
 public class UserRequest {
-    @NotBlank(message = "Nome não pode ser vazio!")
+    @NotBlank(message = "{campo.usuario.nome.obrigatorio}")
     private String name;
 
-    @NotBlank(message = "Login não pode ser vazio!")
+    @NotBlank(message = "{campo.usuario.login.obrigatorio}")
     private String login;
 
-    @NotBlank(message = "Senha não pode ser vazio!")
+    @NotBlank(message = "{campo.usuario.senha.obrigatorio}")
     private String password;
 
-    @NotNull(message = "Flag isAdmin não pode ser null!")
+    @NotNull(message = "{campo.usuario.isAdm.obrigatorio}")
     private boolean isAdmin;
 
-    @NotNull(message = "Departamento não pode ser null!")
+    @NotNull(message = "{campo.usuario.departamento.obrigatorio}")
     private Department department;
 }

@@ -6,15 +6,14 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class Configurations {
-
-    @Value("${application.name}")
-    private String appName;
+@Data
+public class AWSConfig {
 
     @Value("${aws.key}")
     private String awsKey;
@@ -25,11 +24,6 @@ public class Configurations {
     @Value("${aws.bucket}")
     private String awsBucket;
 
-    @Bean(name = "appName")
-    public String applicationName() {
-        return this.appName;
-    }
-
     @Bean(name = "awsBucket")
     public String awsBucketName() {
         return this.awsBucket;
@@ -37,7 +31,7 @@ public class Configurations {
 
     @Bean
     public AmazonS3 getClient() {
-        AWSCredentials credential = new BasicAWSCredentials(awsKey,awsSecret);
+        AWSCredentials credential = new BasicAWSCredentials(awsKey, awsSecret);
         return AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credential))
