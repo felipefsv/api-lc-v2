@@ -3,7 +3,7 @@ package com.lc.apilc.controllers;
 import com.lc.apilc.enums.StatusWorkOrder;
 import com.lc.apilc.models.entity.WorkOrder;
 import com.lc.apilc.models.request.WorkOrderRequest;
-import com.lc.apilc.models.request.WorkOrderStatus;
+import com.lc.apilc.models.request.WorkOrderStatusRequest;
 import com.lc.apilc.services.WorkOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,8 +33,8 @@ public class WorkOrderController {
     }
 
     @PatchMapping("{id}")
-    public void updateSatus(@PathVariable UUID id, @RequestBody @Valid WorkOrderStatus workOrderStatus) {
-        this.workOrderService.updateWorkOrderStatus(id, StatusWorkOrder.valueOf(workOrderStatus.getStatus()));
+    public void updateSatus(@PathVariable UUID id, @RequestBody @Valid WorkOrderStatusRequest workOrderStatusRequest) {
+        this.workOrderService.updateWorkOrderStatus(id, StatusWorkOrder.valueOf(workOrderStatusRequest.getStatus()));
     }
 
 }
