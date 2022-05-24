@@ -9,6 +9,7 @@ import com.lc.apilc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +26,9 @@ public class UserController {
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable UUID id) {
@@ -44,8 +48,10 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public Object createUser(@RequestBody @Valid UserRequest userRequest) {
         if (userService.existsByLogin(userRequest.getLogin())) {
-            throw new LcException("Login já existe!", ErrorCodes.USUARIO_INVALIDO);
+            throw new LcException("Login já existe!", ErrorCodes.OPERACAO_ILEGAL);
         }
+        String pswEncoded = passwordEncoder.encode(userRequest.getPassword());
+        userRequest.setPassword(pswEncoded);
         return userService.createUser(userRequest);
     }
 

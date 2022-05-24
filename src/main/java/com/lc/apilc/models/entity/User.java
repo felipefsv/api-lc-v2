@@ -1,6 +1,5 @@
 package com.lc.apilc.models.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lc.apilc.models.request.UserRequest;
 import lombok.Data;
