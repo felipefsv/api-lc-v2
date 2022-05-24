@@ -4,6 +4,7 @@ import com.lc.apilc.enums.ErrorCodes;
 import com.lc.apilc.exception.LcException;
 import com.lc.apilc.services.JwtService;
 import com.lc.apilc.services.UserDetailService;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,8 +28,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String path = request.getRequestURI();
-        if (path.equals("/api/v2/login")) {
+        if (publicUrl(request)) {
             filterChain.doFilter(request, response);
         } else {
             String authorization = request.getHeader("Authorization");
@@ -49,5 +49,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 throw new LcException("Authorization não encontrado", ErrorCodes.OPERACAO_ILEGAL);
             }
         }
+    }
+
+    private boolean publicUrl(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        String method = request.getMethod();
+
+        boolean isLogin = path.equals("/api/v2/login") && method.equals("POST");
+        boolean isPostUser = path.equals("/api/v2/user") && method.equals("POST");
+        boolean isGetDepartment = path.equals("/api/v2/department") && method.equals("GET");
+        boolean isPostDepartment = path.equals("/api/v2/department") && method.equals("POST");
+
+        return isLogin || isPostUser || isGetDepartment || isPostDepartment;
     }
 }
