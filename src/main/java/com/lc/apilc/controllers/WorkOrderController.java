@@ -4,6 +4,7 @@ import com.lc.apilc.enums.StatusWorkOrder;
 import com.lc.apilc.models.entity.WorkOrder;
 import com.lc.apilc.models.request.WorkOrderRequest;
 import com.lc.apilc.models.request.WorkOrderStatusRequest;
+import com.lc.apilc.services.PostMarkService;
 import com.lc.apilc.services.WorkOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,11 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("workorder")
 public class WorkOrderController {
-
     @Autowired
     private WorkOrderService workOrderService;
+
+    @Autowired
+    private PostMarkService postMarkService;
 
     @GetMapping()
     public List<WorkOrder> getWorkOrders() {
@@ -29,7 +32,9 @@ public class WorkOrderController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Object createWorkOrder(@RequestBody @Valid WorkOrderRequest workOrderRequest) {
-        return workOrderService.createWorkOrder(workOrderRequest);
+        WorkOrder workOrder = workOrderService.createWorkOrder(workOrderRequest);
+//        postMarkService.sendNewWorkOrderEmail(workOrder);
+        return workOrder;
     }
 
     @PatchMapping("{id}")
